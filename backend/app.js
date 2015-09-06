@@ -23,7 +23,7 @@ app.use(app.router);
 app.use(express.static(__dirname + '/public'));
 
 // ROUTES HERE!
-app.get('/', people.index);
+app.get('/people', people.index);
 app.post('/init', people.init);
 
 // Aaaaand here we go:

@@ -26,7 +26,9 @@ exports.init = function(req, res) {
       var newPerson = new Person({
         name: {
           first: person.first,
-          last: person.last
+          middle: person.middle,
+          last: person.last,
+          suffix: person.suffix
         },
       	birth : {
       		date: person.bday,
