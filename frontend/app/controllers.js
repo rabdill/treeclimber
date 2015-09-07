@@ -17,3 +17,22 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		});
 	}
 ]);
+
+treeControllers.controller('UploadCtrl', ['$scope', '$http', function ($scope, $http) {
+	$http.get('http://localhost:3000/sign').success(function(data) {
+		$scope.bucket = data.bucket;
+		$scope.signature = data.signature;
+		$scope.awsKey = data.awsKey;
+		$scope.policy = data.policy;
+	});
+}]);
+
+treeControllers.controller('UploadedCtrl', ['$scope', '$http', function ($scope, $http) {
+	var getVars = {};
+	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		getVars[key] = value;
+	});
+
+	$scope.filename = getVars.key
+
+}]);

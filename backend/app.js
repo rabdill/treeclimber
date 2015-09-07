@@ -28,6 +28,7 @@ app.get('/people', people.index);
 app.get('/people/:id', people.profile);
 app.get('/documents', documents.index);
 app.post('/init', people.init);
+app.get('/sign', documents.sign);
 
 // Aaaaand here we go:
 http.createServer(app).listen(app.get('port'), function(){

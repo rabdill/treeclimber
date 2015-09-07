@@ -17,6 +17,14 @@ tree.config(['$routeProvider',
 				templateUrl: 'partials/profile.html',
         controller: 'ProfileCtrl'
       }).
+      when('/documents/add', {
+				templateUrl: 'partials/upload_form.html',
+        controller: 'UploadCtrl'
+      }).
+      when('/documents/uploaded', {
+				templateUrl: 'partials/upload_complete.html',
+        controller: 'UploadedCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });
