@@ -6,15 +6,43 @@
   <title>Treeclimber Private Geneology Tool</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://cdn.foundation5.zurb.com/foundation.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <h1>Treeclimber</h1>
-  <div ng-view></div>
 
+
+  <div class="view-container" style="padding-top: 65px;">
+    <div class="icon-bar four-up fixed">
+      <h1 class="title show-for-medium-up">Treeclimber</h1>
+      <h1 class="title show-for-small-only">TC</h1>
+      <a class="item" href="/app/#/">
+        <i class="fi-home"></i>
+      </a>
+      <a class="item" href="/app/#/people">
+        <i class="fi-torsos"></i>
+      </a>
+      <a class="item" href="/app/#/documents">
+        <i class="fi-page-multiple"></i>
+      </a>
+    </div>
+    <div ng-view class="view-frame"></div>
+  </div>
+
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="http://cdn.foundation5.zurb.com/foundation.js"></script>
+
   <script src="app.js"></script>
   <script src="controllers.js"></script>
+  <script src="animations.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
 </body>
 </html>

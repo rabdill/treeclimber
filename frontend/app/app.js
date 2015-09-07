@@ -3,11 +3,12 @@
 // Declare app level module which depends on views, and components
 var tree = angular.module('treeclimber', [
   'ngRoute',
-  'treeControllers'
+  'treeControllers',
+  'treeAnimations'
 ]);
 
-tree.config(['$routeProvider',
-  function($routeProvider) {
+tree.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
     $routeProvider.
       when('/people', {
         templateUrl: 'partials/people.html',
