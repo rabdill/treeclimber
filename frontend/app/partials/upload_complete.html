@@ -1,1 +1,11 @@
-<h2>{{filename}} uploaded successfully!</h2>
+<h2>{{filename}} uploaded successfully</h2>
+<p>{{status}}</p>
+<div data-ng-show="!registered">
+	Title: <input type="text" data-ng-model="title"><br>
+	Origin: <input type="text" data-ng-model="origin"><br>
+	Source: <input type="text" data-ng-model="source"><br>
+	Description: <input type="text" data-ng-model="description"><br>
+	Transcript: <input type="textbox" data-ng-model="transcript"><br><br>
+	<input type="hidden" data-ng-model="key" value="https://s3.amazonaws.com/treeclimber/{{filename}}">
+	<button data-ng-click="create()">Create item</button>
+</div>

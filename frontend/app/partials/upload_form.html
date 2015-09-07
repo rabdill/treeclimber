@@ -1,14 +1,14 @@
 <form action="https://treeclimber.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
   <input type="hidden" name="key" value="gramps.jpg">
   <input type="hidden" name="AWSAccessKeyId" value="{{awsKey}}">
-  <input type="hidden" name="acl" value="private">
+  <input type="hidden" name="acl" value="public-read">
   <input type="hidden" name="success_action_redirect" value="http://localhost:8000/app/#/documents/uploaded">
   <input type="hidden" name="policy" value="{{policy}}">
   <input type="hidden" name="signature" value="{{signature}}">
   <!-- Include any additional input fields here -->
 
   File to upload to S3:<br>
-  <input name="file" type="file">
+  <input type="file" name="file">
   <br><br>
   <input type="submit" value="Upload File to S3">
 </form>

@@ -90,9 +90,6 @@ exports.init = function(req, res) {
     } // end of the loop going through each family member
   } // end of createPeople();
 
-
-
-
   function createDocuments() {
     var completed = 0;
     var total = initTree.documents.length; // all the regions

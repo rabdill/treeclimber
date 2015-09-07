@@ -9,9 +9,13 @@ var tree = angular.module('treeclimber', [
 tree.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/', {
+      when('/people', {
         templateUrl: 'partials/people.html',
-        controller: 'ListCtrl'
+        controller: 'PeopleListCtrl'
+      }).
+      when('/documents', {
+        templateUrl: 'partials/documents.html',
+        controller: 'DocListCtrl'
       }).
       when('/people/:personId', {
 				templateUrl: 'partials/profile.html',
@@ -26,7 +30,7 @@ tree.config(['$routeProvider',
         controller: 'UploadedCtrl'
       }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/people'
       });
 	}
 ]);

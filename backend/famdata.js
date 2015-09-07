@@ -9,14 +9,12 @@ module.exports = {
 			"bplace" : "New York, NY",
 			"dday" : "Nov 2 2070",
 			"dplace" : "The Moon",
-			"epitaph" : "He kicked what ass he could."
 		},
 		{
 			"first" : "Lauren",
 			"last" : "Abdill",
 			"bday" : "Jan 20 1992",
 			"bplace" : "Frederick, MD",
-			"epitaph" : "She was so young."
 		}
 	],
 	documents: [
@@ -26,6 +24,13 @@ module.exports = {
 			"source" : "Twitter.com",
 			"description" : "Rich making a dumb squinty face.",
 		  "files" : ["https://pbs.twimg.com/profile_images/438354903597998080/JnW3fms7.jpeg"]
+		},
+		{
+			"title" : "John C Calhoun portrait",
+			"origin" : "U.S. Congress",
+			"source" : "Wikipedia",
+			"description" : "Just a regular not-horrible terrible fellow",
+		  "files" : ["https://s3.amazonaws.com/treeclimber/gramps.jpg"]
 		}
 	]
 };
