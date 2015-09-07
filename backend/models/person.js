@@ -16,7 +16,8 @@ var personSchema = new Schema({
 		date: Date,
 		place: String
 	},
-  photo : {type: String}
+  photo : {type: String},
+  biography : {type: String}
 });
 
 personSchema.virtual('name.full').get(function () {
