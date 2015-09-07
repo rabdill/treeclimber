@@ -16,7 +16,7 @@ var personSchema = new Schema({
 		date: Date,
 		place: String
 	},
-	epitaph : {type: String}
+  photo : {type: String}
 });
 
 personSchema.virtual('name.full').get(function () {

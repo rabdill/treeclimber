@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var people = require('./routes/people');
+var documents = require('./routes/documents');
 var mongoose = require('mongoose');
 var cors = require('cors')
 
@@ -25,6 +26,7 @@ app.use(express.static(__dirname + '/public'));
 // ROUTES HERE!
 app.get('/people', people.index);
 app.get('/people/:id', people.profile);
+app.get('/documents', documents.index);
 app.post('/init', people.init);
 
 // Aaaaand here we go:

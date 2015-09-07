@@ -18,5 +18,14 @@ module.exports = {
 			"bplace" : "Frederick, MD",
 			"epitaph" : "She was so young."
 		}
+	],
+	documents: [
+		{
+			"title" : "Richard Abdill III photo",
+			"origin" : "Twitter profile",
+			"source" : "Twitter.com",
+			"description" : "Rich making a dumb squinty face.",
+		  "files" : ["https://pbs.twimg.com/profile_images/438354903597998080/JnW3fms7.jpeg"]
+		}
 	]
 };
