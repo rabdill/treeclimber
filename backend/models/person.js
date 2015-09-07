@@ -43,6 +43,11 @@ personSchema.virtual('alive').get(function () {
   return this.death.date ? false : true;
 });
 
+personSchema.virtual('age').get(function () {
+  var currentYear = new Date().getFullYear()
+  return this.alive ? currentYear - this.birth.year : this.death.year - this.birth.year;
+});
+
 personSchema.set('toJSON', { getters: true, virtuals: true });
 
 module.exports = {
