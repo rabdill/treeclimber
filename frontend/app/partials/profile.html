@@ -3,6 +3,6 @@
 	<h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}}</h3>
 	<ul>
 		<li><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
-		<li data-ng-show={{person.death.year}}><strong>Died:</strong> {{person.death.dateprint}}, {{person.death.place}}
+		<li data-ng-hide="person.alive"><strong>Died:</strong> {{person.death.dateprint}}, {{person.death.place}}
 	</ul>
 </div>

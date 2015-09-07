@@ -39,6 +39,10 @@ personSchema.virtual('death.dateprint').get(function () {
   return this.death.date ? this.death.date.toISOString().slice(0,10) : false;
 });
 
+personSchema.virtual('alive').get(function () {
+  return this.death.date ? false : true;
+});
+
 personSchema.set('toJSON', { getters: true, virtuals: true });
 
 module.exports = {
