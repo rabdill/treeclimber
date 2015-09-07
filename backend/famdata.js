@@ -16,8 +16,6 @@ module.exports = {
 			"last" : "Abdill",
 			"bday" : "Jan 20 1992",
 			"bplace" : "Frederick, MD",
-			"dday" : "Jan 21 2120",
-			"dplace" : "Cagefighter City",
 			"epitaph" : "She was so young."
 		}
 	]

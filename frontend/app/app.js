@@ -13,6 +13,10 @@ tree.config(['$routeProvider',
         templateUrl: 'partials/people.html',
         controller: 'ListCtrl'
       }).
+      when('/people/:personId', {
+				templateUrl: 'partials/profile.html',
+        controller: 'ProfileCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });

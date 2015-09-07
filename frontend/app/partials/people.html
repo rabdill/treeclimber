@@ -1,6 +1,6 @@
 <div>
 	<p>Here are all your people!</p>
 	<ul>
-		<li ng-repeat="person in people">{{person.name.full}}
+		<li ng-repeat="person in people"><a data-ng-href="#people/{{person._id}}">{{person.name.full}}</a>
 	</ul>
 </div>

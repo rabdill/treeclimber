@@ -13,6 +13,18 @@ exports.index = function(req, res) {
   });
 }
 
+exports.profile = function(req, res) {
+  Person.findOne({ '_id': req.params.id }, function(err, person) {
+    if(err) {
+      res.json(500, { message: err });
+    } else {
+      res.json(200, {
+        person: person
+      });
+    }
+  });
+}
+
 exports.init = function(req, res) {
   Person.remove({}, function(err) {
     if(err) {

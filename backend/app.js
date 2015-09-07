@@ -24,6 +24,7 @@ app.use(express.static(__dirname + '/public'));
 
 // ROUTES HERE!
 app.get('/people', people.index);
+app.get('/people/:id', people.profile);
 app.post('/init', people.init);
 
 // Aaaaand here we go:
