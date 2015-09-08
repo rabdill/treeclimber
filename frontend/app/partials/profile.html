@@ -1,11 +1,38 @@
 <div class="row">
   <div class="medium-6 medium-offset-3 columns">
 		<h2>{{person.name.full}}</h2>
-		<h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}} (age {{person.age}})</h3>
-		<ul>
-			<li><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
-			<li data-ng-hide="person.alive"><strong>Died:</strong> {{person.death.dateprint}}, {{person.death.place}}
-      <li data-ng-hide="!person.biography"><strong>Biography:</strong> {{person.biography}}
-		</ul>
+    <h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}} (age {{person.age}})</h3>
+    <button class="button small" id="editswitch" data-ng-click="switchEdit()">{{editing ? "Cancel" : "Edit"}}</button>
+    <div data-ng-show="!editing">
+  		<ul>
+  			<li><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
+  			<li data-ng-hide="person.alive"><strong>Died:</strong> {{person.death.dateprint}}, {{person.death.place}}
+        <li data-ng-hide="!person.biography"><strong>Biography:</strong> {{person.biography}}
+  		</ul>
+    </div>
+
+    <!-- for editing the data: -->
+    <div data-ng-show="editing">
+  		<ul>
+        <li><strong>First:</strong> <input type="text" data-ng-model="person.name.first">
+        <li><strong>Middle:</strong> <input type="text" data-ng-model="person.name.middle">
+        <li><strong>Last:</strong> <input type="text" data-ng-model="person.name.last">
+        <li><strong>Suffix:</strong> <input type="text" data-ng-model="person.name.suffix">
+  			<li><strong>Birth date:</strong> <input type="text" data-ng-model="person.birth.date">
+        <li><strong>Birth place:</strong> <input type="text" data-ng-model="person.birth.place">
+        <li><strong>Death date:</strong> <input type="text" data-ng-model="person.death.date">
+        <li><strong>Death place:</strong> <input type="text" data-ng-model="person.death.place">
+        <li><strong>Biography:</strong> <textarea data-ng-model="person.biography" rows="10" cols="60"></textarea>
+  		</ul>
+      <button data-ng-click="update()">Update!</button>
+    </div>
+
 	</div>
+</div>
+
+<div id="editModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Awesome. I have it.</h2>
+  <p class="lead">Your couch.  It is mine.</p>
+  <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

@@ -33,6 +33,16 @@ exports.profile = function(req, res) {
   });
 }
 
+exports.update = function(req, res) {
+  console.log(req.body);
+  Person.findByIdAndUpdate(req.body._id, { $set:req.body}, function (err, data) {
+    if (err) {
+      res.json(500, {message: "Update failed. Error: " + err});
+    }
+    res.json(201, { message: "Person updated." });
+  });
+}
+
 exports.register = function(req, res) {
   var newPerson = new Person(req.body);
 

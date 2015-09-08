@@ -32,8 +32,19 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 	  	$scope.person = data.person;
 			console.log(data);
 		});
+	$scope.editing = false;
+
+	$scope.switchEdit = function() {
+		$scope.editing = !$scope.editing;
 	}
-]);
+
+	$scope.update = function() {
+		$http.post('http://localhost:3000/people/update',$scope.person).success(function(data) {
+			console.log(data);
+			$scope.editing = false;
+		});
+	}
+}]);
 
 //	form for uploading a new file
 treeControllers.controller('UploadCtrl', ['$scope', '$http', function ($scope, $http) {
