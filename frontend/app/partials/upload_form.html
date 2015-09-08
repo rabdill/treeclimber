@@ -1,5 +1,6 @@
 <div class="row">
-  <div class="medium-6 medium-offset-3 columns">
+	<div class="medium-6 medium-offset-3 columns">
+		<h2>Upload document</h2>
     <form action="https://treeclimber.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
       <input type="hidden" name="key" value="{{tstamp}}${filename}">
       <input type="hidden" name="AWSAccessKeyId" value="{{awsKey}}">
@@ -9,10 +10,10 @@
       <input type="hidden" name="signature" value="{{signature}}">
       <!-- Include any additional input fields here -->
 
-      File to upload to S3:<br>
+      Please select the file to upload:<br>
       <input type="file" name="file">
       <br><br>
-      <input type="submit" value="Upload File to S3">
+      <input type="submit" class="button" value="Upload">
     </form>
   </div>
 </div>

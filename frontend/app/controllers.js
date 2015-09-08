@@ -54,7 +54,7 @@ treeControllers.controller('UploadedCtrl', ['$scope', '$http', function ($scope,
 	});
 	$scope.filename = getVars.key;
 	$scope.registered = false;
-	$scope.status = "Now, it's time to register your file as an official document:";
+	$scope.status = $scope.filename + " uploaded successfully. Now, it's time to register your file as an official document:";
 
 	$scope.create = function() {
 		var params = {
