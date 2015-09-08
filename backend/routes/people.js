@@ -69,7 +69,7 @@ exports.init = function(req, res) {
       		date: person.dday,
       		place: person.dplace
       	},
-      	epitaph : person.epitaph
+      	biography : person.biography
       });
       console.log("Starting creation process for " + person.first);
 

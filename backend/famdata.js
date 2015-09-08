@@ -15,6 +15,7 @@ module.exports = {
 			"last" : "Abdill",
 			"bday" : "Jan 20 1992",
 			"bplace" : "Frederick, MD",
+			"biography" : "She was a lion-tamer most of the time but didn't really like it very much."
 		}
 	],
 	documents: [
