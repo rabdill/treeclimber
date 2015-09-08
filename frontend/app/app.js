@@ -10,6 +10,10 @@ var tree = angular.module('treeclimber', [
 tree.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider.
+      when('/', {
+        templateUrl: 'partials/home.html',
+        controller: 'HomeCtrl'
+      }).
       when('/people', {
         templateUrl: 'partials/people.html',
         controller: 'PeopleListCtrl'

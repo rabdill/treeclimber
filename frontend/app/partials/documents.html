@@ -1,8 +1,9 @@
 <div class="row">
-  <div class="large-12 columns">
-		<p>Here are all your documents!</p>
-		<ul>
-			<li ng-repeat="doc in documents"><strong><a data-ng-href="{{doc.files[0]}}">{{doc.title}}</a>:</strong> {{doc.description}}
+  <div class="medium-6 medium-offset-3 columns">
+    <h2>Documents</h2>
+    <ul>
+      <li ng-repeat="doc in documents"><strong><a data-ng-href="{{doc.files[0]}}">{{doc.title}}</a>:</strong> {{doc.description}}
+		</ul>
 		</ul>
 	</div>
 </div>

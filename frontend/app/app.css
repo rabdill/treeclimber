@@ -1,3 +1,7 @@
+body {
+  font-family: 'Ruda', sans-serif;
+}
+
 .treeIcon {
   font-size: 4em;
   color: rgba(245,159,26,0.8);
@@ -6,6 +10,9 @@
 
 .title {
   font-family: 'Grand Hotel', cursive;
+}
+
+.icon-bar > .title {
   font-size: 32px;
   color: white;
 }
@@ -14,9 +21,22 @@
   padding: 5px;
 }
 
+.bigtitle h1, h2 {
+  text-align: center;
+}
 
+.bigtitle > h2 {
+  font-size: 15px;
+  margin-bottom: -20px;
+}
 
+.bigtitle > h1 {
+  font-size: 5em;
+}
 
+h2 {
+  font-family: 'Alegreya Sans SC', sans-serif;
+}
 /************* ANIMATIONS *************/
 .view-container {
   position: relative;

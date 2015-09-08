@@ -1,10 +1,11 @@
 <div class="row">
-  <div class="large-12 columns">
+  <div class="medium-6 medium-offset-3 columns">
 		<h2>{{person.name.full}}</h2>
 		<h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}} (age {{person.age}})</h3>
 		<ul>
 			<li><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
 			<li data-ng-hide="person.alive"><strong>Died:</strong> {{person.death.dateprint}}, {{person.death.place}}
+      <li data-ng-hide="!person.biography"><strong>Biography:</strong> {{person.biography}}
 		</ul>
 	</div>
 </div>

@@ -2,6 +2,16 @@ var treeControllers = angular.module('treeControllers', [
 	'ngRoute'
 ]);
 
+treeControllers.controller('HomeCtrl', ['$scope', '$http', function ($scope, $http) {
+	$http.get('http://localhost:3000/people').success(function(data) {
+  	$scope.people = data.people;
+	});
+	$http.get('http://localhost:3000/documents').success(function(data) {
+  	$scope.documents = data.documents;
+		console.log(data);
+	});
+}]);
+
 treeControllers.controller('PeopleListCtrl', ['$scope', '$http', function ($scope, $http) {
 	$http.get('http://localhost:3000/people').success(function(data) {
   	$scope.people = data.people;
@@ -32,6 +42,7 @@ treeControllers.controller('UploadCtrl', ['$scope', '$http', function ($scope, $
 		$scope.signature = data.signature;
 		$scope.awsKey = data.awsKey;
 		$scope.policy = data.policy;
+		$scope.tstamp =  Date.now();
 	});
 }]);
 
