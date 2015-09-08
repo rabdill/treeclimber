@@ -30,6 +30,7 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
     $scope.personId = $routeParams.personId; // the region being attacked
 		$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
 	  	$scope.person = data.person;
+			$scope.documents = data.documents;
 			console.log(data);
 		});
 	$scope.editing = false;
@@ -42,6 +43,16 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		$http.post('http://localhost:3000/people/update',$scope.person).success(function(data) {
 			console.log(data);
 			$scope.editing = false;
+		});
+	}
+
+	$scope.addcite = function() {
+		var params = {
+			personId : $scope.personId,
+			docId : $scope.citation
+		};
+		$http.post('http://localhost:3000/people/citation',params).success(function(data) {
+			console.log(data);
 		});
 	}
 }]);

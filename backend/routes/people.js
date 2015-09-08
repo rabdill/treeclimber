@@ -27,8 +27,16 @@ exports.profile = function(req, res) {
     if(err) {
       res.json(500, { message: err });
     } else {
-      res.json(200, {
-        person: person
+      // find all the citations, to fill in the drop-down:
+      Document.find({}, function(err, documents) {
+        if(err) {
+          res.json(500, { message: err });
+        } else {
+          res.json(200, {
+            person: person,
+            documents: documents
+          });
+        }
       });
     }
   });
@@ -69,14 +77,11 @@ exports.citation = function(req, res) {
     if (err) {
       res.json(500, { message: "Citations could not be retrieved: " + err })
     }
-    console.log("We're looking for citations!!");
-    console.log(response);
     if (response) {
       newCitation.number = response[0].number + 1;
     } else {
       newCitation.number = 1;
     }
-    console.log("new is " + newCitation.number);
 
     newCitation.save(function(err) {
       if(err) {
