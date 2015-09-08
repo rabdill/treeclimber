@@ -29,6 +29,11 @@
 	</div>
   <div class="medium-3 columns">
     <h3>Citations</h3>
+    <ul>
+      <li ng-repeat="cite in citations | orderBy:number">
+        <strong>{{cite.number}}:</strong> {{cite.doc.title}}
+      </li>
+    </ul>
     <h4>Add a citation</h4>
     <select ng-options="doc as doc.title for doc in documents track by doc._id" ng-model="citation"></select>
     <button class="button small" data-ng-click="addcite()">Add</button>

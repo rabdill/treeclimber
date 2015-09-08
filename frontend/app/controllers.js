@@ -27,13 +27,28 @@ treeControllers.controller('DocListCtrl', ['$scope', '$http', function ($scope, 
 }]);
 
 treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
-    $scope.personId = $routeParams.personId; // the region being attacked
-		$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
-	  	$scope.person = data.person;
-			$scope.documents = data.documents;
-			console.log(data);
-		});
+  $scope.personId = $routeParams.personId; // the region being attacked
+	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
+  	$scope.person = data.person;
+		$scope.documents = data.documents;
+		$scope.citations = data.citations;
+
+		for(var i=0,cite; cite = $scope.citations[i]; i++) {
+			cite.doc = getDoc(cite.document);
+		}
+		console.log(data);
+	});
 	$scope.editing = false;
+
+	// translate a document ID into its object:
+	var getDoc = function(docId) {
+		for(var i=0,doc; doc = $scope.documents[i]; i++) {
+			if(doc._id === docId) {
+				return doc;
+			}
+		}
+		return false;
+	};
 
 	$scope.switchEdit = function() {
 		$scope.editing = !$scope.editing;
@@ -53,6 +68,14 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		};
 		$http.post('http://localhost:3000/people/citation',params).success(function(data) {
 			console.log(data);
+			// get an updated version of the citations:
+			$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
+				$scope.citations = data.citations;
+				for(var i=0,cite; cite = $scope.citations[i]; i++) {
+					cite.doc = getDoc(cite.document);
+				}
+				console.log(data);
+			});
 		});
 	}
 }]);

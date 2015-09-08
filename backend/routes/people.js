@@ -32,9 +32,16 @@ exports.profile = function(req, res) {
         if(err) {
           res.json(500, { message: err });
         } else {
-          res.json(200, {
-            person: person,
-            documents: documents
+          Citation.find({ person : req.params.id }, function(err, citations) {
+            if(err) {
+              res.json(500, { message: err });
+            } else {
+              res.json(200, {
+                person: person,
+                documents: documents,
+                citations: citations
+              });
+            }
           });
         }
       });
@@ -77,7 +84,7 @@ exports.citation = function(req, res) {
     if (err) {
       res.json(500, { message: "Citations could not be retrieved: " + err })
     }
-    if (response) {
+    if (response.length > 0) {
       newCitation.number = response[0].number + 1;
     } else {
       newCitation.number = 1;
@@ -98,15 +105,21 @@ exports.init = function(req, res) {
   functionsComplete = 0;
   Person.remove({}, function(err) {
     if(err) {
-      res.json(500, { message: "Old records could not be deleted: " + err });
+      res.json(500, { message: "Old people could not be deleted: " + err });
     }
 
     Document.remove({}, function(err) {
       if(err) {
-        res.json(500, { message: "Old records could not be deleted: " + err });
+        res.json(500, { message: "Old documents could not be deleted: " + err });
       }
-      createPeople();
-      createDocuments();
+
+      Citation.remove({}, function(err) {
+        if(err) {
+          res.json(500, { message: "Old citations could not be deleted: " + err });
+        }
+        createPeople();
+        createDocuments();
+      });
     });
   });
 
