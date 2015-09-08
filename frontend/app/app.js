@@ -18,6 +18,10 @@ tree.config(['$routeProvider', '$locationProvider',
         templateUrl: 'partials/people.html',
         controller: 'PeopleListCtrl'
       }).
+      when('/people/register', {
+        templateUrl: 'partials/add_person.html',
+        controller: 'AddPersonCtrl'
+      }).
       when('/documents', {
         templateUrl: 'partials/documents.html',
         controller: 'DocListCtrl'

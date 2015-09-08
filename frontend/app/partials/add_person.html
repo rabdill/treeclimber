@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="medium-6 medium-offset-3 columns">
+		<h2>Create person</h2>
+		<p>{{status}}</p>
+		<div data-ng-show="!registered">
+			First: <input type="text" data-ng-model="first"><br>
+			Middle: <input type="text" data-ng-model="middle"><br>
+			Last: <input type="text" data-ng-model="last"><br>
+			Suffix: <input type="text" data-ng-model="suffix"><br><br>
+
+			Birth date: <input type="text" data-ng-model="bdate"><br>
+			Birth place: <input type="text" data-ng-model="bplace"><br><br>
+
+			Death date: <input type="text" data-ng-model="ddate"><br>
+			Death place: <input type="text" data-ng-model="dplace"><br><br>
+
+			Biography: <textarea rows="10" cols="60" data-ng-model="biography"></textarea>
+
+			<button data-ng-click="create()">Create item</button>
+		</div>
+	</div>
+</div>

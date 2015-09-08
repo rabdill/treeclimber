@@ -71,3 +71,35 @@ treeControllers.controller('UploadedCtrl', ['$scope', '$http', function ($scope,
 		});
 	}
 }]);
+
+// creating a new person
+treeControllers.controller('AddPersonCtrl', ['$scope', '$http', function ($scope, $http) {
+	$scope.registered = false;
+	$scope.status = "";
+
+	$scope.create = function() {
+		var params = {
+			name : {
+		    first: $scope.first,
+		    middle: $scope.middle,
+		    last: $scope.last,
+		    suffix: $scope.suffix
+		  },
+			birth : {
+				date: $scope.bdate,
+				place: $scope.bplace
+			},
+			death : {
+				date: $scope.ddate,
+				place: $scope.dplace
+			},
+		  biography : $scope.biography
+		};
+		console.log(params);
+		$http.post('http://localhost:3000/people/register',params).success(function(data) {
+			console.log(data);
+			$scope.registered = true;
+			$scope.status = "DONE! WOOOO!";
+		});
+	}
+}]);

@@ -5,15 +5,15 @@ module.exports = {
 		{
 			"first" : "Richard",
 			"last" : "Abdill",
-			"bday" : "Nov 1 1989",
+			"bdate" : "Nov 1 1989",
 			"bplace" : "New York, NY",
-			"dday" : "Nov 2 2070",
+			"ddate" : "Nov 2 2070",
 			"dplace" : "The Moon",
 		},
 		{
 			"first" : "Lauren",
 			"last" : "Abdill",
-			"bday" : "Jan 20 1992",
+			"bdate" : "Jan 20 1992",
 			"bplace" : "Frederick, MD",
 			"biography" : "She was a lion-tamer most of the time but didn't really like it very much."
 		}

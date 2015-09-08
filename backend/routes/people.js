@@ -33,6 +33,19 @@ exports.profile = function(req, res) {
   });
 }
 
+exports.register = function(req, res) {
+  var newPerson = new Person(req.body);
+
+  // save the region (doesn't have to wait for the units?!)
+  newPerson.save(function(err) {
+    if(err) {
+      res.json(500, {message: "Creation failed. Could not create new person. Error: " + err});
+    } else {
+      res.json(201, { message: "New person created." });
+    }
+  });
+}
+
 exports.init = function(req, res) {
   functionsComplete = 0;
   Person.remove({}, function(err) {
@@ -62,11 +75,11 @@ exports.init = function(req, res) {
           suffix: person.suffix
         },
       	birth : {
-      		date: person.bday,
+      		date: person.bdate,
       		place: person.bplace
       	},
       	death : {
-      		date: person.dday,
+      		date: person.ddate,
       		place: person.dplace
       	},
       	biography : person.biography
