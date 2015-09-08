@@ -1,5 +1,6 @@
 var Person = require('../models/person').Person;
 var Document = require('../models/document').Document;
+var Citation = require('../models/citation').Citation;
 var initTree = require('../famdata.js');  // fetch all the initial data
 
 exports.index = function(req, res) {
@@ -43,10 +44,10 @@ exports.update = function(req, res) {
   });
 }
 
+// new person:
 exports.register = function(req, res) {
   var newPerson = new Person(req.body);
 
-  // save the region (doesn't have to wait for the units?!)
   newPerson.save(function(err) {
     if(err) {
       res.json(500, {message: "Creation failed. Could not create new person. Error: " + err});
@@ -56,16 +57,48 @@ exports.register = function(req, res) {
   });
 }
 
+exports.citation = function(req, res) {
+  var newCitation = new Citation({
+    person : req.body.personId,
+  	document : req.body.docId
+  });
+
+  // find the next available "footnote" number:
+  var query = Citation.where({ person: req.body.personId }).limit(1).select('number').sort('-number');
+  query.find(function (err, response) {
+    if (err) {
+      res.json(500, { message: "Citations could not be retrieved: " + err })
+    }
+    console.log("We're looking for citations!!");
+    console.log(response);
+    if (response) {
+      newCitation.number = response[0].number + 1;
+    } else {
+      newCitation.number = 1;
+    }
+    console.log("new is " + newCitation.number);
+
+    newCitation.save(function(err) {
+      if(err) {
+        res.json(500, {message: "Creation failed. Could not create new citation. Error: " + err});
+      } else {
+        res.json(201, { message: "New citation created.", citation: newCitation });
+      }
+    });
+  });
+}
+
+// put in the starter data:
 exports.init = function(req, res) {
   functionsComplete = 0;
   Person.remove({}, function(err) {
     if(err) {
-      res.json(500, { message: "Old records could not be deleted: " + err })
+      res.json(500, { message: "Old records could not be deleted: " + err });
     }
 
     Document.remove({}, function(err) {
       if(err) {
-        res.json(500, { message: "Old records could not be deleted: " + err })
+        res.json(500, { message: "Old records could not be deleted: " + err });
       }
       createPeople();
       createDocuments();

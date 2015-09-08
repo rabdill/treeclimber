@@ -26,12 +26,15 @@ app.use(express.static(__dirname + '/public'));
 // ROUTES HERE!
 app.get('/people', people.index);
 app.get('/people/:id', people.profile);
-app.get('/documents', documents.index);
-app.post('/documents/register', documents.register);
 app.post('/people/register', people.register);
 app.post('/people/update', people.update);
-app.post('/init', people.init);
+app.post('/people/citation', people.citation);
+
 app.get('/sign', documents.sign);
+app.get('/documents', documents.index);
+app.post('/documents/register', documents.register);
+
+app.post('/init', people.init);
 
 // Aaaaand here we go:
 http.createServer(app).listen(app.get('port'), function(){
