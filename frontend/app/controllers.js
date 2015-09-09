@@ -28,10 +28,17 @@ treeControllers.controller('DocListCtrl', ['$scope', '$http', function ($scope, 
 
 treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
   $scope.personId = $routeParams.personId; // the region being attacked
+	$scope.relations = [];
+	var findName = function(search, position) {
+		console.log("FINDING " + position);
+		$http.get('http://localhost:3000/people/' + search).success(function(data) {
+			console.log(data.person.name.full);
+			$scope.relations[position].otherName = data.person.name.full;
+		});
+	}
 
 	$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
 		for(var i=0, rel; rel = data.relations[i]; i++) {
-			$scope.relations = [];
 			var position1 = false; // whether the person being profiled is person 1 or not
 			var search;
 			// figuring out which person is the "other" person:
@@ -42,22 +49,18 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 				search = rel.person1;
 			}
 
-			var printRelation = {};
+			$scope.relations[i] = {};
 			switch(rel.relation) {
 				case "spouse":
-					printRelation.relation = "Spouse";
+					$scope.relations[i].relation = "Spouse";
 					break;
 				case "parent":
-					printRelation.relation = position1 ? "Child" : "Parent";
+					$scope.relations[i].relation = position1 ? "Child" : "Parent";
 					break;
 			}
-
-			$http.get('http://localhost:3000/people/' + search).success(function(otherData) {
-				printRelation.otherName = otherData.person.name.full;
-				$scope.relations.push(printRelation);
-			});
+			console.log("Findname for " + i);
+			findName(search, i);
 		}
-		console.log(data);
 	});
 
 	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
