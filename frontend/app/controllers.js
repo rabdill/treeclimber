@@ -30,9 +30,7 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
   $scope.personId = $routeParams.personId; // the region being attacked
 	$scope.relations = [];
 	var findName = function(search, position) {
-		console.log("FINDING " + position);
 		$http.get('http://localhost:3000/people/' + search).success(function(data) {
-			console.log(data.person.name.full);
 			$scope.relations[position].otherName = data.person.name.full;
 		});
 	}
@@ -41,15 +39,15 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		for(var i=0, rel; rel = data.relations[i]; i++) {
 			var position1 = false; // whether the person being profiled is person 1 or not
 			var search;
+			$scope.relations[i] = {};
 			// figuring out which person is the "other" person:
 			if(rel.person1 === $scope.personId) {
-				search = rel.person2;
+				$scope.relations[i].otherId = rel.person2;
 				position1 = true;
 			} else {
-				search = rel.person1;
+				$scope.relations[i].otherId = rel.person1;
 			}
 
-			$scope.relations[i] = {};
 			switch(rel.relation) {
 				case "spouse":
 					$scope.relations[i].relation = "Spouse";
@@ -58,8 +56,7 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 					$scope.relations[i].relation = position1 ? "Child" : "Parent";
 					break;
 			}
-			console.log("Findname for " + i);
-			findName(search, i);
+			findName($scope.relations[i].otherId, i);
 		}
 	});
 
