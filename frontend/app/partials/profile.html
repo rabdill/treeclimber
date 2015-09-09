@@ -34,6 +34,16 @@
         <strong>{{rel.relation}}:</strong> <a data-ng-href="/app/#/people/{{rel.otherId}}">{{rel.otherName}}</a>
       </li>
     </ul>
+    <h4>Add a relation</h4>
+    <p>{{person.name.first}} is the
+      <select name="singleSelect" ng-model="how_related">
+        <option value="spouse">spouse</option>
+        <option value="parent">parent</option>
+        <option value="child">child</option>
+    </select> of:</p>
+    <select ng-options="relative as relative.name.full for relative in people track by relative._id" ng-model="relation_to_add"></select>
+    <button class="button small" data-ng-click="addrel()">Add</button>
+
     <h3>Citations</h3>
     <ul>
       <li ng-repeat="cite in citations | orderBy:number">
@@ -41,7 +51,7 @@
       </li>
     </ul>
     <h4>Add a citation</h4>
-    <select ng-options="doc as doc.title for doc in documents track by doc._id" ng-model="citation"></select>
+    <select ng-options="doc as doc.title for doc in documents track by doc._id" ng-model="citation_to_add"></select>
     <button class="button small" data-ng-click="addcite()">Add</button>
   </div>
 </div>

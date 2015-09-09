@@ -28,6 +28,7 @@ exports.find = function(req, res) {
 };
 
 exports.create = function(req, res) {
+	console.log(req.body);
   var newRelation = new Relation({
     person1 : req.body.person1,
   	person2 : req.body.person2,
