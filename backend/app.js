@@ -36,8 +36,6 @@ app.get('/sign', documents.sign);
 app.get('/documents', documents.index);
 app.post('/documents/register', documents.register);
 
-app.post('/init', people.init);
-
 // Aaaaand here we go:
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Treeclimber Express server listening on port ' + app.get('port'));
