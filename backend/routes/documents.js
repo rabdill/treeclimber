@@ -4,7 +4,6 @@ var secrets = require('../secrets');
 var bucket = secrets.s3.bucket;
 var awsKey = secrets.s3.awsKey;
 var secret = secrets.s3.secretKey;
-var initTree = require('../famdata.js').documents;  // fetch all the initial data
 
 exports.index = function(req, res) {
   Document.find({}, function(err, documents) {

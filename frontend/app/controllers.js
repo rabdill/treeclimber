@@ -29,12 +29,18 @@ treeControllers.controller('DocListCtrl', ['$scope', '$http', function ($scope, 
 treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
   $scope.personId = $routeParams.personId; // the region being attacked
 	$scope.relations = [];
+
+	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
+  	$scope.person = data.person;
+	});
+
+	// for finding the name of the relations:
 	var findName = function(search, position) {
 		$http.get('http://localhost:3000/people/' + search).success(function(data) {
 			$scope.relations[position].otherName = data.person.name.full;
 		});
 	}
-
+	// get the relations:
 	$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
 		for(var i=0, rel; rel = data.relations[i]; i++) {
 			var position1 = false; // whether the person being profiled is person 1 or not
@@ -60,18 +66,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		}
 	});
 
-	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
-  	$scope.person = data.person;
-		$scope.documents = data.documents;
-		$scope.citations = data.citations;
-
-		for(var i=0,cite; cite = $scope.citations[i]; i++) {
-			cite.doc = getDoc(cite.document);
-		}
-		console.log(data);
-	});
-	$scope.editing = false;
-
 	// translate a document ID into its object:
 	var getDoc = function(docId) {
 		for(var i=0,doc; doc = $scope.documents[i]; i++) {
@@ -81,6 +75,21 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		}
 		return false;
 	};
+	// get the documents:
+	$http.get('http://localhost:3000/documents').success(function(data) {
+		$scope.documents = data.documents;
+		$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
+			console.log(data);
+			$scope.citations = data.citations;
+			// find the citation titles:
+			if($scope.citations.length > 0) {
+				for(var i=0,cite; cite = $scope.citations[i]; i++) {
+					cite.doc = getDoc(cite.document);
+				}
+			}
+		});
+	});
+	$scope.editing = false;
 
 	$scope.switchEdit = function() {
 		$scope.editing = !$scope.editing;
