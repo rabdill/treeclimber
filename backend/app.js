@@ -27,8 +27,10 @@ app.use(express.static(__dirname + '/public'));
 app.get('/people', people.index);
 app.get('/people/:id', people.profile);
 app.post('/people/register', people.register);
-app.post('/people/update', people.update);
+app.post('/people/update', people.update); // should this be "patch" to /people/:id ?
 app.post('/people/citation', people.citation);
+app.post('/people/relation', people.relation);
+app.get('/people/relation/:id', people.listRelations);
 
 app.get('/sign', documents.sign);
 app.get('/documents', documents.index);

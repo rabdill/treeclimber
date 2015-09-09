@@ -28,6 +28,38 @@ treeControllers.controller('DocListCtrl', ['$scope', '$http', function ($scope, 
 
 treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
   $scope.personId = $routeParams.personId; // the region being attacked
+
+	$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
+		for(var i=0, rel; rel = data.relations[i]; i++) {
+			$scope.relations = [];
+			var position1 = false; // whether the person being profiled is person 1 or not
+			var search;
+			// figuring out which person is the "other" person:
+			if(rel.person1 === $scope.personId) {
+				search = rel.person2;
+				position1 = true;
+			} else {
+				search = rel.person1;
+			}
+
+			var printRelation = {};
+			switch(rel.relation) {
+				case "spouse":
+					printRelation.relation = "Spouse";
+					break;
+				case "parent":
+					printRelation.relation = position1 ? "Child" : "Parent";
+					break;
+			}
+
+			$http.get('http://localhost:3000/people/' + search).success(function(otherData) {
+				printRelation.otherName = otherData.person.name.full;
+				$scope.relations.push(printRelation);
+			});
+		}
+		console.log(data);
+	});
+
 	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
   	$scope.person = data.person;
 		$scope.documents = data.documents;

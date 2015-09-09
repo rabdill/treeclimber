@@ -1,6 +1,7 @@
 var Person = require('../models/person').Person;
 var Document = require('../models/document').Document;
 var Citation = require('../models/citation').Citation;
+var Relation = require('../models/relation').Relation;
 var initTree = require('../famdata.js');  // fetch all the initial data
 
 exports.index = function(req, res) {
@@ -45,6 +46,35 @@ exports.profile = function(req, res) {
           });
         }
       });
+    }
+  });
+}
+
+exports.listRelations = function(req, res) {
+  var checked = 0;
+  var relations = [];
+  console.log(req.params.id);
+  Relation.find({ person1 : req.params.id }, function(err, newRelations) {
+    if(err) {
+      res.json(500, { message: err });
+    } else {
+      console.log(newRelations);
+      checked++;
+      relations = relations.concat(newRelations);
+      if(checked === 2) {
+        res.json(200, {relations: relations});
+      }
+    }
+  });
+  Relation.find({ person2 : req.params.id }, function(err, newRelations) {
+    if(err) {
+      res.json(500, { message: err });
+    } else {
+      checked++;
+      relations = relations.concat(newRelations);
+      if(checked === 2) {
+        res.json(200, {relations: relations});
+      }
     }
   });
 }
@@ -97,6 +127,25 @@ exports.citation = function(req, res) {
         res.json(201, { message: "New citation created.", citation: newCitation });
       }
     });
+  });
+}
+
+exports.relation = function(req, res) {
+  var newRelation = new Relation({
+    person1 : req.body.person1,
+  	person2 : req.body.person2,
+  	relation : req.body.relation
+  });
+  if(req.body.relation === "spouse") {
+    newRelation.marriage.start = req.body.start;
+    newRelation.marriage.end = req.body.end;
+  }
+  newRelation.save(function(err) {
+    if(err) {
+      res.json(500, {message: "Creation failed. Could not create new relation. Error: " + err});
+    } else {
+      res.json(201, { message: "New relation created.", relation: newRelation });
+    }
   });
 }
 

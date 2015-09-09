@@ -28,6 +28,12 @@
     </div>
 	</div>
   <div class="medium-3 columns">
+    <h3>Relations</h3>
+    <ul>
+      <li ng-repeat="rel in relations">
+        <strong>{{rel.relation}}:</strong> {{rel.otherName}}
+      </li>
+    </ul>
     <h3>Citations</h3>
     <ul>
       <li ng-repeat="cite in citations | orderBy:number">
