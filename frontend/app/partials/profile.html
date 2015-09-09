@@ -2,7 +2,7 @@
   <div class="medium-6 medium-offset-3 columns">
 		<h2>{{person.name.full}}</h2>
     <h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}} (age {{person.age}})</h3>
-    <button class="button small" id="editswitch" data-ng-click="switchEdit()">{{editing ? "Cancel" : "Edit"}}</button>
+    <button class="button small" id="editswitch" data-ng-click="switchViz('editing')">{{editing ? "Cancel" : "Edit"}}</button>
     <div data-ng-show="!editing">
   		<ul>
   			<li><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
@@ -28,30 +28,37 @@
     </div>
 	</div>
   <div class="medium-3 columns">
-    <h3>Relations</h3>
-    <ul>
-      <li ng-repeat="rel in relations">
-        <strong>{{rel.relation}}:</strong> <a data-ng-href="/app/#/people/{{rel.otherId}}">{{rel.otherName}}</a>
-      </li>
-    </ul>
-    <h4>Add a relation</h4>
-    <p>{{person.name.first}} is the
-      <select name="singleSelect" ng-model="how_related">
-        <option value="spouse">spouse</option>
-        <option value="parent">parent</option>
-        <option value="child">child</option>
-    </select> of:</p>
-    <select ng-options="relative as relative.name.full for relative in people track by relative._id" ng-model="relation_to_add"></select>
-    <button class="button small" data-ng-click="addrel()">Add</button>
-
-    <h3>Citations</h3>
-    <ul>
-      <li ng-repeat="cite in citations | orderBy:number">
-        <strong>{{cite.number}}:</strong> {{cite.doc.title}}
-      </li>
-    </ul>
-    <h4>Add a citation</h4>
-    <select ng-options="doc as doc.title for doc in documents track by doc._id" ng-model="citation_to_add"></select>
-    <button class="button small" data-ng-click="addcite()">Add</button>
+    <div data-ng-show="relations.length > 0 || editing">
+      <h3>Relations</h3>
+      <ul>
+        <li ng-repeat="rel in relations">
+          <strong>{{rel.relation}}:</strong> <a data-ng-href="/app/#/people/{{rel.otherId}}">{{rel.otherName}}</a>
+        </li>
+      </ul>
+    </div>
+    <div data-ng-show="editing">
+      <h4>Add a relation</h4>
+      <p>{{person.name.first}} is the
+        <select name="singleSelect" ng-model="how_related">
+          <option value="spouse">spouse</option>
+          <option value="parent">parent</option>
+          <option value="child">child</option>
+      </select> of:</p>
+      <select ng-options="relative as relative.name.full for relative in people track by relative._id" ng-model="relation_to_add"></select>
+      <button class="button small" data-ng-click="addrel()">Add</button>
+    </div>
+    <div data-ng-show="citations.length > 0 || editing">
+      <h3>Citations</h3>
+      <ul>
+        <li ng-repeat="cite in citations | orderBy:number">
+          <strong>{{cite.number}}:</strong> {{cite.doc.title}}
+        </li>
+      </ul>
+    </div>
+    <div data-ng-show="editing">
+      <h4>Add a citation</h4>
+      <select ng-options="doc as doc.title for doc in documents track by doc._id" ng-model="citation_to_add"></select>
+      <button class="button small" data-ng-click="addcite()">Add</button>
+    </div>
   </div>
 </div>
