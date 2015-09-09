@@ -8,7 +8,6 @@ treeControllers.controller('HomeCtrl', ['$scope', '$http', function ($scope, $ht
 	});
 	$http.get('http://localhost:3000/documents').success(function(data) {
   	$scope.documents = data.documents;
-		console.log(data);
 	});
 }]);
 
