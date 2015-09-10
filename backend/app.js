@@ -29,7 +29,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/people', people.index);
 app.get('/people/:id', people.find);
 app.post('/people/register', people.create);
-app.post('/people/update', people.update); // should this be "patch" to /people/:id ?
+app.put('/people/:id', people.update);
 app.get('/people/citation/:id', citations.find);
 app.post('/people/citation', citations.create);
 app.post('/people/citation/remove', citations.delete);

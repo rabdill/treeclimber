@@ -30,11 +30,11 @@ exports.find = function(req, res) {
 // fix up an existing person:
 exports.update = function(req, res) {
   console.log(req.body);
-  Person.findByIdAndUpdate(req.body._id, { $set:req.body}, function (err, data) {
+  Person.findByIdAndUpdate(req.params.id, { $set:req.body}, function (err, data) {
     if (err) {
       res.json(500, {message: "Update failed. Error: " + err});
     }
-    res.json(201, { message: "Person updated." });
+    res.json(200, { message: "Person updated." });
   });
 };
 

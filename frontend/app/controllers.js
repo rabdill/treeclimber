@@ -107,7 +107,7 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 	};
 
 	$scope.update = function() {
-		$http.post('http://localhost:3000/people/update',$scope.person).success(function(data) {
+		$http.put('http://localhost:3000/people/' + $scope.personId, $scope.person).success(function(data) {
 			console.log(data);
 			$scope.editing = false;
 		});
