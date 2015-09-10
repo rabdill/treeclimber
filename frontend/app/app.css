@@ -38,6 +38,15 @@ body {
 h2 {
   font-family: 'Alegreya Sans SC', sans-serif;
 }
+
+.deletebutton {
+  margin-left: 10px;
+}
+
+.deletebutton:hover {
+  color: #FF0000;
+}
+
 /************* ANIMATIONS *************/
 .view-container {
   position: relative;

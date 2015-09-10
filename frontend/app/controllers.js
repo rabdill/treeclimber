@@ -157,6 +157,14 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		if(answer) {
 			$http.post('http://localhost:3000/people/citation/remove',cite).success(function(data) {
 				console.log(data);
+				// get an updated version of the citations:
+				$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
+					$scope.citations = data.citations;
+					console.log($scope.citations);
+					for(var i=0,cite; cite = $scope.citations[i]; i++) {
+						cite.doc = getDoc(cite.document);
+					}
+				});
 			});
 		}
 	}
