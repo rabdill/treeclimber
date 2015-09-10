@@ -118,15 +118,14 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 			personId : $scope.personId,
 			docId : $scope.citation_to_add
 		};
-		$http.post('http://localhost:3000/people/citation',params).success(function(data) {
-			console.log(data);
+		$http.post('http://localhost:3000/people/citation',params).success(function(result) {
 			// get an updated version of the citations:
-			$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
+			$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
 				$scope.citations = data.citations;
+				console.log($scope.citations);
 				for(var i=0,cite; cite = $scope.citations[i]; i++) {
 					cite.doc = getDoc(cite.document);
 				}
-				console.log(data);
 			});
 		});
 	};
