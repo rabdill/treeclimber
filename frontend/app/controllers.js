@@ -46,6 +46,7 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 				var position1 = false; // whether the person being profiled is person 1 or not
 				var search;
 				$scope.relations[i] = {};
+				$scope.relations[i].id = rel._id;
 				// figuring out which person is the "other" person:
 				if(rel.person1 === $scope.personId) {
 					$scope.relations[i].otherId = rel.person2;
@@ -82,6 +83,7 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 	// get the documents:
 	$http.get('http://localhost:3000/documents').success(function(data) {
 		$scope.documents = data.documents;
+		// get the citations:
 		$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
 			console.log(data);
 			$scope.citations = data.citations;
@@ -151,6 +153,14 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		});
 	};
 
+	$scope.delCite = function(cite) {
+		var answer = confirm("Are you sure you want to remove the link between this person and the document titled '" + cite.doc.title + "'?")
+		if(answer) {
+			$http.post('http://localhost:3000/people/citation/remove',cite).success(function(data) {
+				console.log(data);
+			});
+		}
+	}
 }]);
 
 //	form for uploading a new file

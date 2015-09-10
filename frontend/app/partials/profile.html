@@ -2,7 +2,7 @@
   <div class="medium-6 medium-offset-3 columns">
 		<h2>{{person.name.full}}</h2>
     <h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}} (age {{person.age}})</h3>
-    <button class="button small" id="editswitch" data-ng-click="switchViz('editing')">{{editing ? "Cancel" : "Edit"}}</button>
+    <button class="button small" id="editswitch" data-ng-click="switchEdit()">{{editing ? "Cancel" : "Edit"}}</button>
     <div data-ng-show="!editing">
   		<ul>
   			<li><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
@@ -32,7 +32,7 @@
       <h3>Relations</h3>
       <ul>
         <li ng-repeat="rel in relations">
-          <strong>{{rel.relation}}:</strong> <a data-ng-href="/app/#/people/{{rel.otherId}}">{{rel.otherName}}</a>
+          <strong>{{rel.relation}}:</strong> <a data-ng-href="/app/#/people/{{rel.otherId}}">{{rel.otherName}}</a><i class="fi-x-circle deletebutton" data-ng-click="delRel('{{rel.id}}')" data-ng-show="editing"></i>
         </li>
       </ul>
     </div>
@@ -51,7 +51,7 @@
       <h3>Citations</h3>
       <ul>
         <li ng-repeat="cite in citations | orderBy:number">
-          <strong>{{cite.number}}:</strong> {{cite.doc.title}}
+          <strong>{{cite.number}}:</strong> {{cite.doc.title}}<i class="fi-x-circle deletebutton" data-ng-click="delCite(cite)" data-ng-show="editing"></i>
         </li>
       </ul>
     </div>

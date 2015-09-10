@@ -12,6 +12,17 @@ exports.find = function(req, res) {
 	});
 };
 
+exports.delete = function(req, res) {
+	console.log(req.body);
+	Citation.remove({ _id: req.body._id }, function (err) {
+		if(err) {
+	    res.json(500, { message: err });
+	  } else {
+	    res.json(200, { message: "Citation removed." });
+	  }
+	});
+};
+
 exports.create = function(req, res) {
   var newCitation = new Citation({
     person : req.body.personId,

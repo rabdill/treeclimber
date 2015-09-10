@@ -32,6 +32,7 @@ app.post('/people/register', people.create);
 app.post('/people/update', people.update); // should this be "patch" to /people/:id ?
 app.get('/people/citation/:id', citations.find);
 app.post('/people/citation', citations.create);
+app.post('/people/citation/remove', citations.delete);
 app.post('/people/relation', relations.create);
 app.get('/people/relation/:id', relations.find);
 
