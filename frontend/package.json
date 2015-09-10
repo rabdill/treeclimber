@@ -1,7 +1,7 @@
 {
   "name": "treeclimber",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Frontend of the Treeclimber geneology application",
   "repository": "https://github.com/rabdill/treeclimber",
   "license": "GPL",
