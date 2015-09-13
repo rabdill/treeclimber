@@ -46,3 +46,14 @@ exports.create = function(req, res) {
     }
   });
 };
+
+exports.delete = function(req, res) {
+	console.log(req.body.id);
+	Relation.remove({ _id: req.body.id }, function (err) {
+		if(err) {
+	    res.json(500, { message: err });
+	  } else {
+	    res.json(200, { message: "Relation removed." });
+	  }
+	});
+};

@@ -156,18 +156,30 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		var answer = confirm("Are you sure you want to remove the link between this person and the document titled '" + cite.doc.title + "'?")
 		if(answer) {
 			$http.post('http://localhost:3000/people/citation/remove',cite).success(function(data) {
-				console.log(data);
 				// get an updated version of the citations:
 				$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
 					$scope.citations = data.citations;
-					console.log($scope.citations);
 					for(var i=0,cite; cite = $scope.citations[i]; i++) {
 						cite.doc = getDoc(cite.document);
 					}
 				});
 			});
 		}
+	};
+
+	$scope.delRel = function(rel) {
+		var answer = confirm("Are you sure you want to remove the link between this person and " + rel.otherName + "?")
+		if(answer) {
+			$http.post('http://localhost:3000/people/relation/remove',rel).success(function(data) {
+				console.log(data);
+				// get an updated version of the citations:
+				$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
+					$scope.relations = data.relations;
+				});
+			});
+		}
 	}
+
 }]);
 
 //	form for uploading a new file

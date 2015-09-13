@@ -35,6 +35,8 @@ app.post('/people/citation', citations.create);
 app.post('/people/citation/remove', citations.delete);
 app.post('/people/relation', relations.create);
 app.get('/people/relation/:id', relations.find);
+app.post('/people/relation/remove', relations.delete);
+
 
 app.get('/sign', documents.sign);
 app.get('/documents', documents.index);
