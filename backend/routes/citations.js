@@ -13,7 +13,6 @@ exports.find = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-	console.log(req.body);
 	Citation.remove({ _id: req.body._id }, function (err) {
 		if(err) {
 	    res.json(500, { message: err });
