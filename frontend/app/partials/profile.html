@@ -1,7 +1,7 @@
 <div class="row">
   <div class="medium-6 medium-offset-3 columns">
 		<h2>{{person.name.full}}</h2>
-    <h3>{{person.birth.year}} &ndash; {{person.death.year || "present"}} (age {{person.age}})</h3>
+    <h3>{{person.birth.year ? person.birth.year : "unknown"}} &ndash; {{person.death.year || "present"}}<span data-ng-show="person.birth.year"> (age {{person.age}})</span></h3>
     <button class="button small" id="editswitch" data-ng-click="switchEdit()">{{editing ? "Cancel" : "Edit"}}</button>
     <div data-ng-show="!editing">
   		<ul>
