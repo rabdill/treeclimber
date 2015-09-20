@@ -68,7 +68,13 @@ var fake = {
 			document : 0,
 			number : 1
 		}
-	]
+	],
+	"signature" : {
+		bucket : "S3bucketWeee",
+		signature : "a1b2c3",
+		awsKey : "AAAA",
+		policy : "a7$Lsa&"
+	}
 };
 
 /* jasmine specs for controllers go here */
@@ -155,6 +161,8 @@ describe('Treeclimber controllers', function() {
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
       $httpBackend = _$httpBackend_;
 
+			// THE REQUESTS:
+
 			// listing the documents:
 			$httpBackend.when('GET', 'http://localhost:3000/documents').respond({"documents" : fake.documents});
 
@@ -177,6 +185,7 @@ describe('Treeclimber controllers', function() {
       ctrl = $controller('ProfileCtrl', {$scope: scope});
     }));
 
+		// THE TESTS:
 		it('should recognize we\'re looking for the default person ID', function() {
 			$httpBackend.flush();
 			expect(scope.personId).toEqual(0);
@@ -197,7 +206,30 @@ describe('Treeclimber controllers', function() {
       $httpBackend.flush();
       expect(scope.citations[0].doc.title).toEqual('The Codex');
     });
+  });
 
+	describe('UploadCtrl', function(){
+    var scope, ctrl, $httpBackend;
+
+    beforeEach(module('treeclimber'));
+    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+      $httpBackend = _$httpBackend_;
+      $httpBackend.when('GET', 'http://localhost:3000/sign').respond(fake.signature);
+
+      scope = $rootScope.$new();
+      ctrl = $controller('UploadCtrl', {$scope: scope});
+    }));
+
+
+    it('should create \'signature\' model with a bunch of traits', function() {
+      $httpBackend.flush();
+
+      expect(scope.bucket).toEqual(fake.signature.bucket);
+			expect(scope.signature).toEqual(fake.signature.signature);
+			expect(scope.awsKey).toEqual(fake.signature.awsKey);
+			expect(scope.policy).toEqual(fake.signature.policy);
+			expect(scope.tstamp).toEqual(Date.now());	// this needs to be an inequality, in case the tests take more than one second
+    });
   });
 
 });
