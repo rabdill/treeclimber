@@ -111,4 +111,84 @@ describe('Treeclimber controllers', function() {
     });
   });
 
+	describe('DocListCtrl', function(){
+    var scope, ctrl, $httpBackend;
+
+    beforeEach(module('treeclimber'));
+    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+      $httpBackend = _$httpBackend_;
+			$httpBackend.expectGET('http://localhost:3000/documents').respond({"documents" : fake.documents});
+
+      scope = $rootScope.$new();
+      ctrl = $controller('DocListCtrl', {$scope: scope});
+    }));
+
+		it('should create "documents" model with 1 document in it', function() {
+      expect(scope.documents).toBeUndefined();
+      $httpBackend.flush();
+
+      expect(scope.documents.length).toEqual(1);
+			expect(scope.documents).toEqual(fake.documents);
+    });
+  });
+
+	describe('ProfileCtrl', function(){
+    var scope, ctrl, $httpBackend;
+
+    beforeEach(module('treeclimber'));
+    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+      $httpBackend = _$httpBackend_;
+			// getting the default person's info:
+      $httpBackend.expectGET('http://localhost:3000/people/0').respond({"people" : fake.people[0]});
+
+			// listing the person's relatives:
+			$httpBackend.expectGET('http://localhost:3000/people/relation/0').respond(
+				{"relations": [
+						{
+							"_id" : 1234,
+							"person1" : 0,
+							"person2" : 1,
+							"relation" : "spouse"
+						}
+					]
+				}
+			);
+
+			$httpBackend.expectGET('http://localhost:3000/people/citation/0').respond(
+				{"citations": [
+						{
+							"person" : 0,
+							"document" : 0,
+							"number" : 1
+						}
+					]
+				}
+			);
+
+			// listing the documents:
+			$httpBackend.when('GET', 'http://localhost:3000/documents').respond({"documents" : fake.documents});
+
+			// listing all the people:
+			$httpBackend.expectGET('http://localhost:3000/people').respond({"people" : fake.people});
+
+			// getting the relative's info:
+			$httpBackend.expectGET('http://localhost:3000/people/1').respond({"people" : fake.people[1]});
+
+
+		  scope = $rootScope.$new();
+      ctrl = $controller('ProfileCtrl', {$scope: scope});
+    }));
+
+		it('should recognize we\'re looking for the default person ID', function() {
+			$httpBackend.flush();
+			expect(scope.personId).toEqual(0);
+		});
+
+		it('should know the requested person\'s information', function() {
+      $httpBackend.flush();
+      expect(scope.documents.length).toEqual(1);
+			expect(scope.prson).toEqual(fake.people[0]);
+    });
+  });
+
 });

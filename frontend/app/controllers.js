@@ -14,19 +14,18 @@ treeControllers.controller('HomeCtrl', ['$scope', '$http', function ($scope, $ht
 treeControllers.controller('PeopleListCtrl', ['$scope', '$http', function ($scope, $http) {
 	$http.get('http://localhost:3000/people').success(function(data) {
   	$scope.people = data.people;
-		console.log(data);
 	});
 }]);
 
 treeControllers.controller('DocListCtrl', ['$scope', '$http', function ($scope, $http) {
 	$http.get('http://localhost:3000/documents').success(function(data) {
   	$scope.documents = data.documents;
-		console.log(data);
 	});
 }]);
 
 treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
-  $scope.personId = $routeParams.personId; // the region being attacked
+	$scope.personId = $routeParams.personId ? $routeParams.personId : 0; // the person we're looking for (default: 0)
+
 	$scope.relations = [];
 
 	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
