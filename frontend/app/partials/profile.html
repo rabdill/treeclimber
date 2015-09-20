@@ -5,7 +5,7 @@
     <button class="button small" id="editswitch" data-ng-click="switchEdit()">{{editing ? "Cancel" : "Edit"}}</button>
     <div data-ng-show="!editing">
   		<ul>
-  			<li data-ng-show="person.birth.year"><strong>Born:</strong> {{person.birth.dateprint}}, {{person.birth.place}}
+  			<li data-ng-show="person.birth.dateprint || person.birth.place"><strong>Born:</strong> {{person.birth.dateprint ? person.birth.dateprint : ""}}<span data-ng-show="person.birth.dateprint && person.birth.place">, </span><span data-ng-show="person.birth.place">{{person.birth.place}}</span>
   			<li data-ng-hide="person.alive"><strong>Died:</strong> {{person.death.dateprint}}, {{person.death.place}}
         <li data-ng-hide="!person.biography"><strong>Biography:</strong> {{person.biography}}
   		</ul>
