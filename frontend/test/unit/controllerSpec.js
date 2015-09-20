@@ -45,6 +45,7 @@ var fake = {
 	],
 	"documents" : [
 		{
+			_id : 0,
 		  title : "The Codex",
 			origin : "The Mines of Moria",
 			source : "Wikipedia",
@@ -55,17 +56,17 @@ var fake = {
 	],
 	"relations" : [
 		{
-			"_id" : 1234,
-			"person1" : 0,
-			"person2" : 1,
-			"relation" : "spouse"
+			_id : 1234,
+			person1 : 0,
+			person2 : 1,
+			relation : "spouse"
 		}
 	],
 	"citations" : [
 		{
-			"person" : 0,
-			"document" : 0,
-			"number" : 1
+			person : 0,
+			document : 0,
+			number : 1
 		}
 	]
 };
@@ -186,6 +187,17 @@ describe('Treeclimber controllers', function() {
       expect(scope.documents.length).toEqual(1);
 			expect(scope.person).toEqual(fake.people[0]);
     });
+
+		it('should populate a list of citations of length 1', function() {
+      $httpBackend.flush();
+      expect(scope.citations.length).toEqual(1);
+    });
+
+		it('should fetch the title of the referenced citation', function() {
+      $httpBackend.flush();
+      expect(scope.citations[0].doc.title).toEqual('The Codex');
+    });
+
   });
 
 });
