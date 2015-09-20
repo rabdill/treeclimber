@@ -43,7 +43,16 @@ var fake = {
 			}
 		}
 	],
-	"documents" : []
+	"documents" : [
+		{
+		  title : "The Codex",
+			origin : "The Mines of Moria",
+			source : "Wikipedia",
+			description : "DO NOT READ you will die",
+			transcript : "E pluribus cthulu... [unintelligible]",
+		  files : ["firsttestfile.txt"]
+		}
+	]
 };
 
 /* jasmine specs for controllers go here */
@@ -70,5 +79,14 @@ describe('Treeclimber controllers', function() {
       expect(scope.people.length).toEqual(2);
 			expect(scope.people).toEqual(fake.people);
     });
+
+		it('should create "documents" model with 1 document in it', function() {
+      expect(scope.documents).toBeUndefined();
+      $httpBackend.flush();
+
+      expect(scope.documents.length).toEqual(1);
+			expect(scope.documents).toEqual(fake.documents);
+    });
+
   });
 });
