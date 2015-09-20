@@ -29,6 +29,36 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 
 	$scope.relations = [];
 
+	var getRelations = function() {
+		$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
+			for(var i=0, rel; rel = data.relations[i]; i++) {
+				var position1 = false; // whether the person being profiled is person 1 or not
+				var search;
+				$scope.relations[i] = {};
+				$scope.relations[i].id = rel._id;
+				// figuring out which person is the "other" person:
+				if(rel.person1 === $scope.personId) {
+					$scope.relations[i].otherId = rel.person2;
+					position1 = true;
+				} else {
+					$scope.relations[i].otherId = rel.person1;
+				}
+
+				switch(rel.relation) {
+					case "spouse":
+						$scope.relations[i].relation = "Spouse";
+						break;
+					case "parent":
+						$scope.relations[i].relation = position1 ? "Child" : "Parent";
+						break;
+				}
+				findName($scope.relations[i].otherId, i);
+			}
+		});
+	};
+
+	getRelations();
+
 	// get the person's data:
 	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
   	$scope.person = data.person;
@@ -40,33 +70,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 			$scope.relations[position].otherName = data.person.name.full;
 		});
 	}
-
-	// get the relations:
-	$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
-		for(var i=0, rel; rel = data.relations[i]; i++) {
-			var position1 = false; // whether the person being profiled is person 1 or not
-			var search;
-			$scope.relations[i] = {};
-			$scope.relations[i].id = rel._id;
-			// figuring out which person is the "other" person:
-			if(rel.person1 === $scope.personId) {
-				$scope.relations[i].otherId = rel.person2;
-				position1 = true;
-			} else {
-				$scope.relations[i].otherId = rel.person1;
-			}
-
-			switch(rel.relation) {
-				case "spouse":
-					$scope.relations[i].relation = "Spouse";
-					break;
-				case "parent":
-					$scope.relations[i].relation = position1 ? "Child" : "Parent";
-					break;
-			}
-			findName($scope.relations[i].otherId, i);
-		}
-	});
 
 	// translate a document ID into its object:
 	var getDoc = function(docId) {
