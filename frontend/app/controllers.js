@@ -24,10 +24,12 @@ treeControllers.controller('DocListCtrl', ['$scope', '$http', function ($scope, 
 }]);
 
 treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+
 	$scope.personId = $routeParams.personId ? $routeParams.personId : 0; // the person we're looking for (default: 0)
 
 	$scope.relations = [];
 
+	// get the person's data:
 	$http.get('http://localhost:3000/people/' + $scope.personId).success(function(data) {
   	$scope.person = data.person;
 	});
@@ -38,37 +40,33 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 			$scope.relations[position].otherName = data.person.name.full;
 		});
 	}
-	// for fetching the relations:
-	var getRelations = function() {
-		$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
-			for(var i=0, rel; rel = data.relations[i]; i++) {
-				var position1 = false; // whether the person being profiled is person 1 or not
-				var search;
-				$scope.relations[i] = {};
-				$scope.relations[i].id = rel._id;
-				// figuring out which person is the "other" person:
-				if(rel.person1 === $scope.personId) {
-					$scope.relations[i].otherId = rel.person2;
-					position1 = true;
-				} else {
-					$scope.relations[i].otherId = rel.person1;
-				}
-
-				switch(rel.relation) {
-					case "spouse":
-						$scope.relations[i].relation = "Spouse";
-						break;
-					case "parent":
-						$scope.relations[i].relation = position1 ? "Child" : "Parent";
-						break;
-				}
-				findName($scope.relations[i].otherId, i);
-			}
-		});
-	}
 
 	// get the relations:
-	getRelations();
+	$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
+		for(var i=0, rel; rel = data.relations[i]; i++) {
+			var position1 = false; // whether the person being profiled is person 1 or not
+			var search;
+			$scope.relations[i] = {};
+			$scope.relations[i].id = rel._id;
+			// figuring out which person is the "other" person:
+			if(rel.person1 === $scope.personId) {
+				$scope.relations[i].otherId = rel.person2;
+				position1 = true;
+			} else {
+				$scope.relations[i].otherId = rel.person1;
+			}
+
+			switch(rel.relation) {
+				case "spouse":
+					$scope.relations[i].relation = "Spouse";
+					break;
+				case "parent":
+					$scope.relations[i].relation = position1 ? "Child" : "Parent";
+					break;
+			}
+			findName($scope.relations[i].otherId, i);
+		}
+	});
 
 	// translate a document ID into its object:
 	var getDoc = function(docId) {
@@ -84,7 +82,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		$scope.documents = data.documents;
 		// get the citations:
 		$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
-			console.log(data);
 			$scope.citations = data.citations;
 			// find the citation titles:
 			if($scope.citations.length > 0) {
@@ -107,7 +104,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 
 	$scope.update = function() {
 		$http.put('http://localhost:3000/people/' + $scope.personId, $scope.person).success(function(data) {
-			console.log(data);
 			$scope.editing = false;
 		});
 	};
@@ -121,7 +117,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 			// get an updated version of the citations:
 			$http.get('http://localhost:3000/people/citation/' + $scope.personId).success(function(data) {
 				$scope.citations = data.citations;
-				console.log($scope.citations);
 				for(var i=0,cite; cite = $scope.citations[i]; i++) {
 					cite.doc = getDoc(cite.document);
 				}
@@ -130,7 +125,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 	};
 
 	$scope.addrel = function() {
-		console.log($scope.personId);
 		var params = {};
 		switch($scope.how_related) {
 			case "child":
@@ -145,7 +139,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		}
 
 		$http.post('http://localhost:3000/people/relation',params).success(function(data) {
-			console.log(data);
 			// get an updated version of the relations:
 			getRelations();
 		});
@@ -170,7 +163,6 @@ treeControllers.controller('ProfileCtrl', ['$scope', '$routeParams', '$http', fu
 		var answer = confirm("Are you sure you want to remove the link between this person and " + rel.otherName + "?")
 		if(answer) {
 			$http.post('http://localhost:3000/people/relation/remove',rel).success(function(data) {
-				console.log(data);
 				// get an updated version of the citations:
 				$http.get('http://localhost:3000/people/relation/' + $scope.personId).success(function(data) {
 					$scope.relations = data.relations;
@@ -241,9 +233,7 @@ treeControllers.controller('AddPersonCtrl', ['$scope', '$http', function ($scope
 			},
 		  biography : $scope.biography
 		};
-		console.log(params);
 		$http.post('http://localhost:3000/people/register',params).success(function(data) {
-			console.log(data);
 			$scope.registered = true;
 			$scope.status = "DONE! WOOOO!";
 		});
