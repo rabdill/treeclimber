@@ -52,6 +52,21 @@ var fake = {
 			transcript : "E pluribus cthulu... [unintelligible]",
 		  files : ["firsttestfile.txt"]
 		}
+	],
+	"relations" : [
+		{
+			"_id" : 1234,
+			"person1" : 0,
+			"person2" : 1,
+			"relation" : "spouse"
+		}
+	],
+	"citations" : [
+		{
+			"person" : 0,
+			"document" : 0,
+			"number" : 1
+		}
 	]
 };
 
@@ -139,40 +154,21 @@ describe('Treeclimber controllers', function() {
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
       $httpBackend = _$httpBackend_;
 			// getting the default person's info:
-      $httpBackend.expectGET('http://localhost:3000/people/0').respond({"people" : fake.people[0]});
+      $httpBackend.when('GET', 'http://localhost:3000/people/0').respond({"person" : fake.people[0]});
 
 			// listing the person's relatives:
-			$httpBackend.expectGET('http://localhost:3000/people/relation/0').respond(
-				{"relations": [
-						{
-							"_id" : 1234,
-							"person1" : 0,
-							"person2" : 1,
-							"relation" : "spouse"
-						}
-					]
-				}
-			);
+			$httpBackend.when('GET', 'http://localhost:3000/people/relation/0').respond({"relations": fake.relations});
 
-			$httpBackend.expectGET('http://localhost:3000/people/citation/0').respond(
-				{"citations": [
-						{
-							"person" : 0,
-							"document" : 0,
-							"number" : 1
-						}
-					]
-				}
-			);
+			$httpBackend.when('GET', 'http://localhost:3000/people/citation/0').respond({"citations": fake.citations});
 
 			// listing the documents:
 			$httpBackend.when('GET', 'http://localhost:3000/documents').respond({"documents" : fake.documents});
 
 			// listing all the people:
-			$httpBackend.expectGET('http://localhost:3000/people').respond({"people" : fake.people});
+			$httpBackend.when('GET', 'http://localhost:3000/people').respond({"people" : fake.people});
 
 			// getting the relative's info:
-			$httpBackend.expectGET('http://localhost:3000/people/1').respond({"people" : fake.people[1]});
+			$httpBackend.when('GET', 'http://localhost:3000/people/1').respond({"person" : fake.people[1]});
 
 
 		  scope = $rootScope.$new();
@@ -187,7 +183,7 @@ describe('Treeclimber controllers', function() {
 		it('should know the requested person\'s information', function() {
       $httpBackend.flush();
       expect(scope.documents.length).toEqual(1);
-			expect(scope.prson).toEqual(fake.people[0]);
+			expect(scope.person).toEqual(fake.people[0]);
     });
   });
 
