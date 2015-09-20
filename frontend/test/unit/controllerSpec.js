@@ -87,6 +87,28 @@ describe('Treeclimber controllers', function() {
       expect(scope.documents.length).toEqual(1);
 			expect(scope.documents).toEqual(fake.documents);
     });
-
   });
+
+	describe('PeopleListCtrl', function(){
+    var scope, ctrl, $httpBackend;
+
+    beforeEach(module('treeclimber'));
+    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+      $httpBackend = _$httpBackend_;
+      $httpBackend.expectGET('http://localhost:3000/people').respond({"people" : fake.people});
+
+      scope = $rootScope.$new();
+      ctrl = $controller('PeopleListCtrl', {$scope: scope});
+    }));
+
+
+    it('should create "people" model with 2 people in it', function() {
+      expect(scope.people).toBeUndefined();
+      $httpBackend.flush();
+
+      expect(scope.people.length).toEqual(2);
+			expect(scope.people).toEqual(fake.people);
+    });
+  });
+
 });
